@@ -2,3 +2,5 @@ openai
 agno
 ddgs
 duckduckgo-search
+firebase-admin>=6.0.0
+google-cloud-firestore>=2.11.0
