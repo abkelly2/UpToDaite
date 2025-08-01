@@ -1,3 +1,5 @@
 openai
 agno
+duckduckgo-search
+firebase-admin
 ddgs
