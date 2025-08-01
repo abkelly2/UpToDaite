@@ -1,3 +1,4 @@
 openai
 agno
 ddgs
+duckduckgo-search
