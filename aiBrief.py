@@ -13,7 +13,7 @@ cred = credentials.Certificate("firebase-credentials.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-
+ #----------------------FUNCTIONS----------------------#   
 
 def now_date_str():
     """Returns (‘M-D-YYYY’, now_datetime local)"""
@@ -22,7 +22,7 @@ def now_date_str():
     return date_str, now_local
     
 def save_digest_to_firestore(markdown_text):
-    date_str, now = now_date_str()    # uses datetime.now(timezone.utc)
+    date_str, now = now_date_str()
     doc_ref = db.collection("daily_digests").document(date_str)
     doc_ref.set({
         "content":   markdown_text,
@@ -51,6 +51,7 @@ def save_summaries(category: str, summaries: list, date_str: str):
 
 
 #--------------------------------------------------------------#
+#----------------------AGENTS----------------------#
 
 ai_news_fetcher_agent = Agent(
     model = OpenAIChat(id = "gpt-4o-mini"),
@@ -189,14 +190,14 @@ def save_articles_with_summary(day_ref, category: str, items: list):
         })
 
 
+#----------------------MAIN FUNCTION----------------------#
 
-
-def run_daily_pipeline():
+def run_daily_pipeline(): 
     # 1) date & day_doc
     date_str, now = now_date_str()
     day_ref = init_day_doc(date_str, now)
 
-    # 2) fetch+summarize in one go (your researcher agents already return 'summary')
+    # 2) fetch+summarize in one go
     raw_p  = product_news_fetcher_agent.run(..., stream=False).content
     prods  = json.loads(raw_p)
     save_articles_with_summary(day_ref, "productNews", prods)
@@ -227,11 +228,3 @@ Bold headers for Products, AI News, and Research, with top-3 bullet takeaways ea
     
 if __name__ == "__main__":
     run_daily_pipeline()
-
-
-
-
-
-
-
-

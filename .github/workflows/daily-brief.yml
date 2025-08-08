@@ -28,4 +28,6 @@ jobs:
         echo '${{ secrets.FIREBASE_CREDENTIALS }}' > firebase-credentials.json
       
     - name: Run daily brief
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: python aiBrief.py
